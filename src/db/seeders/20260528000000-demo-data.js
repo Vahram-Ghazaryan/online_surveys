@@ -52,15 +52,15 @@ const participants = [
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Questions', questions, {});
+    await queryInterface.bulkInsert({ tableName: 'Questions', schema: 'online_surveys' }, questions, {});
 
-    await queryInterface.bulkInsert('Participants', participants, {});
+    await queryInterface.bulkInsert({ tableName: 'Participants', schema: 'online_surveys' }, participants, {});
 
     const insertedQuestions = await queryInterface.sequelize.query(
-      `SELECT id, text, type, options from "Questions";`
+      `SELECT id, text, type, options from online_surveys."Questions";`
     );
     const insertedParticipants = await queryInterface.sequelize.query(
-      `SELECT id from "Participants";`
+      `SELECT id from online_surveys."Participants";`
     );
 
     const questionRows = insertedQuestions[0];
@@ -99,12 +99,12 @@ module.exports = {
       });
     }
 
-    await queryInterface.bulkInsert('Results', results, {});
+    await queryInterface.bulkInsert({ tableName: 'Results', schema: 'online_surveys' }, results, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Results', null, {});
-    await queryInterface.bulkDelete('Participants', null, {});
-    await queryInterface.bulkDelete('Questions', null, {});
+    await queryInterface.bulkDelete({ tableName: 'Results', schema: 'online_surveys' }, null, {});
+    await queryInterface.bulkDelete({ tableName: 'Participants', schema: 'online_surveys' }, null, {});
+    await queryInterface.bulkDelete({ tableName: 'Questions', schema: 'online_surveys' }, null, {});
   }
 };

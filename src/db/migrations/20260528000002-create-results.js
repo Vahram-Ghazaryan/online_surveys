@@ -1,7 +1,10 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Results', {
+    await queryInterface.createTable({
+      tableName: 'Results',
+      schema: 'online_surveys'
+    }, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,7 +15,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Questions',
+          model: {
+            tableName: 'Questions',
+            schema: 'online_surveys'
+          },
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -22,7 +28,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Participants',
+          model: {
+            tableName: 'Participants',
+            schema: 'online_surveys'
+          },
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -43,6 +52,9 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Results');
+    await queryInterface.dropTable({
+      tableName: 'Results',
+      schema: 'online_surveys'
+    });
   }
 };

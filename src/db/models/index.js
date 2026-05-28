@@ -7,10 +7,16 @@ const config = require('../config/config.js')[env];
 const db = {};
 
 let sequelize;
+const sequelizeOptions = { ...config };
+sequelizeOptions.define = {
+  ...(sequelizeOptions.define || {}),
+  schema: 'online_surveys'
+};
+
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], sequelizeOptions);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, sequelizeOptions);
 }
 
 const Question = require('./question')(sequelize, Sequelize.DataTypes);
