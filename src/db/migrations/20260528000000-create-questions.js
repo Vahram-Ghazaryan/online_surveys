@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // await queryInterface.createSchema('online_surveys');
+    await queryInterface.createSchema('online_surveys');
     await queryInterface.createTable({
       tableName: 'Questions',
       schema: 'online_surveys'
